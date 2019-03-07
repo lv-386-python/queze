@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'authentification'
 ]
 
+AUTH_USER_MODEL = 'authentification.CustomUser'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -126,3 +128,4 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+

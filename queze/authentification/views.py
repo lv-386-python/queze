@@ -1,5 +1,5 @@
 import json
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 
@@ -25,3 +25,11 @@ def log_in(request):
         return HttpResponse(status=400)
     login(request, user=user)
     return HttpResponse(status=200)
+
+
+@require_http_methods(["POST"])
+def log_out(request):
+    print(request.user)
+    logout(request)
+    return HttpResponse(status=200)
+
