@@ -20,6 +20,6 @@ class Test(models.Model):
         test.test_author = user
         try:
             test.save()
-            return user
+            return test
         except (ValueError, IntegrityError):
             pass
