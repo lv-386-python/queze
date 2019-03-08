@@ -25,22 +25,5 @@ class CustomUser(AbstractBaseUser):
             pass
 
 
-class Answer(models.Model):
-    pass
 
-
-class Question(models.Model):
-    pass
-
-
-class Test(models.Model):
-    pass
-
-
-class Results(models.Model):
-    pass
-
-
-class UserAnswer(models.Model):
-    pass
 
