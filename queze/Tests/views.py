@@ -1,8 +1,7 @@
 import json
 
 from django.forms.models import model_to_dict
-from django.http import HttpResponse
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 
 from Tests.models import Test
@@ -24,11 +23,6 @@ def get_test(request, test_id):
         test = Test.objects.get(pk=test_id)
     except:
         return HttpResponse(status=404)
-    data = {"test": {
-        "name": test.test_name,
-        "description": test.test_description,
-        "author": test.test_author
-    }}
     return JsonResponse(model_to_dict(test))
 
 
@@ -44,7 +38,7 @@ def update_test(request, test_id):
     try:
         test.save()
         return JsonResponse({'message': 'Test was successfully updated.'}, status=204)
-    except (ValueError):
+    except:
         HttpResponse(status=400)
 
 
