@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authentification'
+    'authentification',
+    'Tests',
 ]
 
 AUTH_USER_MODEL = 'authentification.CustomUser'
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'queze.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'travis_db',
+        'NAME': 'queze',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',
