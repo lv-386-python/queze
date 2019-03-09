@@ -23,7 +23,3 @@ class CustomUser(AbstractBaseUser):
             return user
         except (ValueError, IntegrityError):
             pass
-
-
-
-

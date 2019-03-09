@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'queze.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'travis_db',
+        'NAME': 'queze',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': 'localhost',
