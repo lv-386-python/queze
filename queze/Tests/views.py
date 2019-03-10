@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from Tests.models import Test, Question
+from Tests.models import Test, Question, Answer
 
 
 @require_http_methods(["POST"])
@@ -96,3 +96,48 @@ def delete_question(request, question_id):
         return HttpResponse(status=404)
     question.delete()
     return JsonResponse({'message': 'Question was successfully deleted.'}, status=204)
+
+
+@require_http_methods(["POST"])
+def create_answer(request):
+    data = json.loads(request.body)
+    user = request.user
+    test = request.test
+    answer = Answer.create_quest(data['answer_text'], user, test)
+    if question:
+        return HttpResponse(status=201)
+    return HttpResponse(status=400)
+
+
+@require_http_methods(["GET"])
+def get_answer(request, answer_id):
+    try:
+        answer = Answer.objects.get(pk=answer_id)
+    except:
+        return HttpResponse(status=404)
+    return JsonResponse(model_to_dict(answer))
+
+        
+@require_http_methods(["PUT"])
+def update_answer(request, answer_id):
+    try:
+        answer = Answer.objects.get(pk=answer_id)
+    except:
+        return HttpResponse(status=404)
+    data = json.loads(request.body)
+    answer.answer_text = data['answer_text']
+    try:
+        answer.save()
+        return JsonResponse({'message': 'Answer was successfully updated.'}, status=204)
+    except:
+        HttpResponse(status=400)    
+        
+        
+@require_http_methods(["DELETE"])
+def delete_answer(request, answer_id):
+    try:
+        answer = Answer.objects.get(pk=answer_id)
+    except:
+        return HttpResponse(status=404)
+    answer.delete()
+    return JsonResponse({'message': 'Answer was successfully deleted.'}, status=204)        
