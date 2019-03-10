@@ -32,8 +32,8 @@ class Answer(models.Model):
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    question_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    question_test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    question_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    question_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=1)
 
     @staticmethod
     def create_quest(text, user, key):
