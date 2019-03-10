@@ -26,8 +26,22 @@ class Test(models.Model):
 
 
 class Answer(models.Model):
-    pass
-
+    'Asnwers for Questions'
+    answer_text = models.ForeignKey(Question, on delete=models.CASCADE)
+    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    is_correct = models.BooleanField(default=False)
+    
+    @staticmethod
+    def create_answer(text, user, correctly):
+        answer = Answer()
+        answer.answer_text = text
+        answer.answer_auther = user
+        answer.is_correct = correctly
+        try:
+            answer.save()
+            return answer
+        except (ValueError, IntegerityError):
+            pass
 
 
 class Question(models.Model):
