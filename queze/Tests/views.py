@@ -171,6 +171,6 @@ def update_user_answer(request, user_answer_id):
     user_answer.question = data["question"]
     try:
         user_answer.save()
-        return JsonResponse({'message': 'Answer was successfully updated.'}, status=204)
+        return JsonResponse({'message': 'User answer was successfully updated.'}, status=204)
     except Exception:
         return HttpResponse(status=404)
