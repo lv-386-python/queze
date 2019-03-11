@@ -25,6 +25,37 @@ class Test(models.Model):
         except (ValueError, IntegrityError):
             pass
 
+    @staticmethod
+    def update_test(test_instance, name, description, user):
+        test = test_instance
+        test.test_name = name
+        test.test_description = description
+        test.test_author = user
+        try:
+            test.save()
+            return test
+        except (ValueError, IntegrityError):
+            pass
+
+
+    @staticmethod
+    def delete_test(test_id):
+        test = Test.get_by_id(test_id)
+        if test:
+            test.delete()
+            return True
+        return False
+
+
+    @staticmethod
+    def get_by_id(test_id):
+        try:
+            test = Test.objects.get(id=test_id)
+        except Test.DoesNotExist:
+            print('Not found')
+            return False
+        return test
+
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200, default=1)
@@ -95,10 +126,10 @@ class Results(models.Model):
 
 
 class UserAnswer(models.Model):
-    user = models.ForeignKey(CustomUser)
-    question = models.ForeignKey(Question)
-    answer = models.ForeignKey(Answer)
-    result = models.ForeignKey(Results, related_name='user_answers')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    result = models.ForeignKey(Results, on_delete=models.CASCADE, related_name='user_answers')
 
     @staticmethod
     def create_user_answer(text, user, answer):

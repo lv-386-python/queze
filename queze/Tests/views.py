@@ -19,37 +19,30 @@ def create_test(request):
 
 @require_http_methods(["GET"])
 def get_test(request, test_id):
-    try:
-        test = Test.objects.get(pk=test_id)
-    except Exception:
+    test = Test.get_by_id(test_id)
+    if not test:
         return HttpResponse(status=404)
     return JsonResponse(model_to_dict(test))
 
 
 @require_http_methods(["PUT"])
 def update_test(request, test_id):
-    try:
-        test = Test.objects.get(pk=test_id)
-    except Exception:
+    test = Test.get_by_id(test_id)
+    if not test:
         return HttpResponse(status=404)
     data = json.loads(request.body)
-    test.test_name = data['test_name']
-    test.test_description = data['test_description']
-    try:
-        test.save()
-        return JsonResponse({'message': 'Test was successfully updated.'}, status=204)
-    except Exception:
-        HttpResponse(status=400)
+    test.update_test(test, data['test_name'], data['test_description'], request.user)
+    if test:
+        return HttpResponse("Successfully updated", status=204)
+    return HttpResponse(status=400)
 
 
 @require_http_methods(["DELETE"])
 def delete_test(request, test_id):
-    try:
-        test = Test.objects.get(pk=test_id)
-    except Exception:
-        return HttpResponse(status=404)
-    test.delete()
-    return JsonResponse({'message': 'Test was successfully deleted.'}, status=204)
+    is_deleted = Test.delete_test(test_id)
+    if is_deleted:
+        return HttpResponse('Deleted.', status=204)
+    return HttpResponse(status=404)
 
 
 @require_http_methods(["POST"])
