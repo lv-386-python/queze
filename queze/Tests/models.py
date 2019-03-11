@@ -1,5 +1,6 @@
 from django.db import IntegrityError
 from django.db import models
+from django.utils import timezone
 
 from authentification.models import CustomUser
 
