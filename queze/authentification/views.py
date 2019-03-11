@@ -56,15 +56,6 @@ def get_user(request, user_id):
     return JsonResponse(model_to_dict(user), status=201)
 
 
-@require_http_methods(["GET"])
-def get_user(request, user_id):
-    try:
-        user = CustomUser.object.get(pk=user_id)
-    except Exception:
-        return HttpResponse(status=404)
-    return JsonResponse(model_to_dict(user), status=201)
-
-
 @require_http_methods(["PUT"])
 def update_user(request, user_id):
     try:
