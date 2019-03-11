@@ -23,4 +23,4 @@ class Migration(migrations.Migration):
                 ('test_author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
-    ]
+]
