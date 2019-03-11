@@ -67,4 +67,19 @@ class Results(models.Model):
 
 
 class UserAnswer(models.Model):
-    pass
+    user = models.ForeignKey(CustomUser)
+    question = models.ForeignKey(Question)
+    answer = models.ForeignKey(Answer)
+
+    @staticmethod
+    def create_user_answer(text, user, answer):
+        user_answer = UserAnswer()
+        user_answer.question = text
+        user_answer.user = user
+        user_answer.answer = answer
+
+        try:
+            user_answer.save()
+            return user_answer
+        except (ValueError, IntegrityError):
+            pass
