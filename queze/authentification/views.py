@@ -1,7 +1,8 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse,JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 from django.forms.models import model_to_dict
 
@@ -11,7 +12,6 @@ from authentification.models import CustomUser
 @require_http_methods(["POST"])
 def registration(request):
     data = json.loads(request.body)
-    print(data)
     user = CustomUser.create(data['email'], data['password'])
     if user:
         return HttpResponse(status=201)
@@ -21,9 +21,7 @@ def registration(request):
 @require_http_methods(["POST"])
 def log_in(request):
     data = json.loads(request.body)
-    print(data)
     user = authenticate(email=data['email'], password=data['password'])
-    print(user)
     if not user:
         return HttpResponse(status=400)
     login(request, user=user)
@@ -32,26 +30,23 @@ def log_in(request):
 
 @require_http_methods(["POST"])
 def log_out(request):
-    print(request.user)
     logout(request)
     return HttpResponse(status=200)
 
 
 @require_http_methods(["DELETE"])
 def delete_user(request, user_id):
-    try:
-        user = CustomUser.object.get(pk=user_id)
-    except Exception:
-        return HttpResponse(status=404)
-    user.delete()
-    return HttpResponse(status=204)
+    is_deleted = CustomUser.delete_by_id(user_id)
+    if is_deleted:
+        return HttpResponse('deleted', status=204)
+    return HttpResponse(status=404)
 
 
 @require_http_methods(["GET"])
 def get_user(request, user_id):
     try:
         user = CustomUser.object.get(pk=user_id)
-    except Exception:
+    except ObjectDoesNotExist:
         return HttpResponse(status=404)
     return JsonResponse(model_to_dict(user), status=201)
 
@@ -60,8 +55,7 @@ def get_user(request, user_id):
 def update_user(request, user_id):
     try:
         user = CustomUser.objects.get(pk=user_id)
-    except:
-        print('not found')
+    except ObjectDoesNotExist:
         return HttpResponse(status=404)
     data = json.loads(request.body)
     user.email = data['new_email']

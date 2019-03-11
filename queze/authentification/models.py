@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import IntegrityError
@@ -23,3 +24,15 @@ class CustomUser(AbstractBaseUser):
             return user
         except (ValueError, IntegrityError):
             pass
+
+
+    @staticmethod
+    def delete_by_id(user_id):
+        try:
+            user = CustomUser.object.get(id=user_id)
+            user.delete()
+        except ObjectDoesNotExist:
+            print('not found')
+        return True
+
+
