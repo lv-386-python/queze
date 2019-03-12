@@ -79,8 +79,8 @@ class Answer(models.Model):
     'Asnwers for Questions'
 
     question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer_text = models.TextField(default=1)
-    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    answer_text = models.CharField(max_lenght=100, default=1)
+    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     is_correct = models.BooleanField(default=False)
 
 
