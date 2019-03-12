@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.db import models
 
-from Tests.models import Test
+from poll.models import Test
 from authentification.models import CustomUser
 
 

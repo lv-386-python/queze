@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'authentification',
-    'Tests',
+    'poll',
     'question'
 ]
 

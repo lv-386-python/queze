@@ -1,6 +1,6 @@
 from django.urls import path
 
-import Tests.views as test_views
+import poll.views as test_views
 
 urlpatterns = [
     path('create', test_views.create_question),
