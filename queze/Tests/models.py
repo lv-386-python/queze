@@ -59,8 +59,8 @@ class Test(models.Model):
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200, default=1)
-    question_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    question_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=None)
+    question_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    question_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=1)
 
     @staticmethod
     def create_quest(text, user, key):
@@ -101,7 +101,7 @@ class Answer(models.Model):
 
 class Results(models.Model):
     'Class with results of the test'
-    score = models.IntegerField(default=1)
+    score = models.IntegerField(default=0)
     result_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=1)
     result_passer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     completion_date = models.DateTimeField(auto_now_add=True)
@@ -126,7 +126,7 @@ class Results(models.Model):
 
     @staticmethod
     def calculate_result(user, test):
-        result = Results.objects.filter(result_test = test, result_passer = user)
+        result = Results.objects.filter(result_test = test, result_passer = user)[0]
         user_answer = result.user_answers
 
 
