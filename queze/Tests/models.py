@@ -46,13 +46,18 @@ class Question(models.Model):
 
 class Answer(models.Model):
     'Asnwers for Questions'
-    answer_text = models.ForeignKey(Question, on_delete=models.CASCADE, default=1)
+
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer_text = models.CharField(max_lenght=100, default=1)
     answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     is_correct = models.BooleanField(default=False)
 
+
     @staticmethod
-    def create_answer(text, user, correctly):
+    def create_answer(question, text, user, correctly):
         answer = Answer()
+
+        answer.question_id = question
         answer.answer_text = text
         answer.answer_auther = user
         answer.is_correct = correctly
