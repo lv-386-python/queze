@@ -1,10 +1,8 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.forms.models import model_to_dict
 
 from authentification.models import CustomUser
 

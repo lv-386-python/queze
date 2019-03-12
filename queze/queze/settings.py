@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'authentification',
     'Tests',
+    'question'
 ]
 
 AUTH_USER_MODEL = 'authentification.CustomUser'

@@ -9,6 +9,9 @@ from django.forms import model_to_dict
 
 
 class CustomUser(AbstractBaseUser):
+    '''
+    User django model
+    '''
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
 
@@ -17,6 +20,7 @@ class CustomUser(AbstractBaseUser):
 
     @staticmethod
     def create(email, password):
+        '''method for creating new user in database'''
         user = CustomUser()
         user.email = email
         user.set_password(password)
@@ -28,6 +32,7 @@ class CustomUser(AbstractBaseUser):
 
     @staticmethod
     def delete_by_id(user_id):
+        '''method for deleting user from database'''
         try:
             user = CustomUser.object.get(id=user_id)
             user.delete()
@@ -37,6 +42,7 @@ class CustomUser(AbstractBaseUser):
 
     @staticmethod
     def get_user(user_id):
+        '''method for getting user from database'''
         try:
             user = CustomUser.object.get(id=user_id)
         except ObjectDoesNotExist:
@@ -45,6 +51,7 @@ class CustomUser(AbstractBaseUser):
 
     @staticmethod
     def update_user(user_id, data):
+        '''method for updating user in database'''
         try:
             user = CustomUser.objects.get(id=user_id)
         except ObjectDoesNotExist:

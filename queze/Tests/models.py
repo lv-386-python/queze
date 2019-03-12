@@ -59,8 +59,8 @@ class Test(models.Model):
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200, default=1)
-    question_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
-    question_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=1)
+    question_author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    question_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=None)
 
     @staticmethod
     def create_quest(text, user, key):
@@ -78,9 +78,9 @@ class Question(models.Model):
 class Answer(models.Model):
     'Asnwers for Questions'
 
-    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer_text = models.CharField(max_lenght=100, default=1)
-    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE, default=1)
+    answer_text = models.CharField(max_length=100, default=1)
+    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
 
@@ -101,7 +101,7 @@ class Answer(models.Model):
 
 class Results(models.Model):
     'Class with results of the test'
-    score = models.IntegerField(default=0)
+    score = models.IntegerField(default=1)
     result_test = models.ForeignKey(Test, on_delete=models.CASCADE, default=1)
     result_passer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     completion_date = models.DateTimeField(auto_now_add=True)
@@ -126,7 +126,7 @@ class Results(models.Model):
 
     @staticmethod
     def calculate_result(user, test):
-        result = Results.objects.filter(result_test = test, result_passer = user)[0]
+        result = Results.objects.filter(result_test = test, result_passer = user)
         user_answer = result.user_answers
 
 
