@@ -5,6 +5,7 @@ from django.db import IntegrityError
 
 
 # Create your models here.
+from django.forms import model_to_dict
 
 
 class CustomUser(AbstractBaseUser):
@@ -25,7 +26,6 @@ class CustomUser(AbstractBaseUser):
         except (ValueError, IntegrityError):
             pass
 
-
     @staticmethod
     def delete_by_id(user_id):
         try:
@@ -35,4 +35,24 @@ class CustomUser(AbstractBaseUser):
             print('not found')
         return True
 
+    @staticmethod
+    def get_user(user_id):
+        try:
+            user = CustomUser.object.get(id=user_id)
+        except ObjectDoesNotExist:
+            return False
+        return model_to_dict(user)
 
+    @staticmethod
+    def update_user(user_id, data):
+        try:
+            user = CustomUser.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return False
+        user.email = data['new_email']
+        user.password = data['new_password']
+        try:
+            user.save()
+            return True
+        except:
+            return False
