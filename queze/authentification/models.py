@@ -41,7 +41,7 @@ class CustomUser(AbstractBaseUser):
         return True
 
     @staticmethod
-    def get_user(user_id):
+    def get(user_id):
         '''method for getting user from database'''
         try:
             user = CustomUser.object.get(id=user_id)
@@ -50,7 +50,7 @@ class CustomUser(AbstractBaseUser):
         return model_to_dict(user)
 
     @staticmethod
-    def update_user(user_id, data):
+    def update(user_id, data):
         '''method for updating user in database'''
         try:
             user = CustomUser.objects.get(id=user_id)

@@ -6,7 +6,7 @@ urlpatterns = [
     path('registration', registration),
     path('login', log_in),
     path('logout', log_out),
-    path('delete_user/<int:user_id>', delete_user),
-    path('get_user/<int:user_id>', get_user),
-    path('update_user/<int:user_id>', update_user)
+    path('delete_by_id/<int:user_id>', delete_user),
+    path('get/<int:user_id>', get_user),
+    path('update/<int:user_id>', update_user)
 ]

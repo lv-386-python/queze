@@ -42,7 +42,7 @@ def delete_user(request, user_id):
 
 @require_http_methods(["GET"])
 def get_user(request, user_id):
-    is_get = CustomUser.get_user(user_id)
+    is_get = CustomUser.get(user_id)
     if is_get:
         return JsonResponse(is_get, status=201)
     return HttpResponse(status=404)
@@ -50,7 +50,7 @@ def get_user(request, user_id):
 @require_http_methods(["PUT"])
 def update_user(request, user_id):
     data = json.loads(request.body)
-    updated_user = CustomUser.update_user(user_id, data)
+    updated_user = CustomUser.update(user_id, data)
     if updated_user:
         return HttpResponse(status=204)
     HttpResponse(status=400)
