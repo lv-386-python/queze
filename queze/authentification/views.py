@@ -1,10 +1,8 @@
 import json
 
 from django.contrib.auth import authenticate, login, logout
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
-from django.forms.models import model_to_dict
 
 from authentification.models import CustomUser
 
@@ -44,24 +42,15 @@ def delete_user(request, user_id):
 
 @require_http_methods(["GET"])
 def get_user(request, user_id):
-    try:
-        user = CustomUser.object.get(pk=user_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(status=404)
-    return JsonResponse(model_to_dict(user), status=201)
-
+    is_get = CustomUser.get(user_id)
+    if is_get:
+        return JsonResponse(is_get, status=201)
+    return HttpResponse(status=404)
 
 @require_http_methods(["PUT"])
 def update_user(request, user_id):
-    try:
-        user = CustomUser.objects.get(pk=user_id)
-    except ObjectDoesNotExist:
-        return HttpResponse(status=404)
     data = json.loads(request.body)
-    user.email = data['new_email']
-    user.password = data['new_password']
-    try:
-        user.save()
+    updated_user = CustomUser.update(user_id, data)
+    if updated_user:
         return HttpResponse(status=204)
-    except:
-        HttpResponse(status=400)
+    HttpResponse(status=400)

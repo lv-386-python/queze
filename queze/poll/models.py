@@ -78,9 +78,9 @@ class Question(models.Model):
 class Answer(models.Model):
     'Asnwers for Questions'
 
-    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer_text = models.CharField(max_lenght=100, default=1)
-    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE, default=1)
+    answer_text = models.CharField(max_length=100, default=1)
+    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
 
 
@@ -128,23 +128,3 @@ class Results(models.Model):
     def calculate_result(user, test):
         result = Results.objects.filter(result_test = test, result_passer = user)[0]
         user_answer = result.user_answers
-
-
-class UserAnswer(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-    result = models.ForeignKey(Results, on_delete=models.CASCADE, related_name='user_answers')
-
-    @staticmethod
-    def create_user_answer(text, user, answer):
-        user_answer = UserAnswer()
-        user_answer.question = text
-        user_answer.user = user
-        user_answer.answer = answer
-
-        try:
-            user_answer.save()
-            return user_answer
-        except (ValueError, IntegrityError):
-            pass

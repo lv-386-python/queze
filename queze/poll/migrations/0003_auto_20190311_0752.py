@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('Tests', '0002_answer_question_results_useranswer'),
+        ('poll', '0002_answer_question_results_useranswer'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='answer_text',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='Tests.Question'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='poll.Question'),
         ),
         migrations.AddField(
             model_name='answer',
@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='question',
             name='question_test',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='Tests.Test'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='poll.Test'),
         ),
         migrations.AddField(
             model_name='question',
@@ -58,7 +58,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='results',
             name='result_test',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='Tests.Test'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='poll.Test'),
         ),
         migrations.AddField(
             model_name='results',
