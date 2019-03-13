@@ -2,6 +2,7 @@ from django.db import IntegrityError
 from django.db import models
 
 from authentification.models import CustomUser
+from poll.models import Test
 
 
 class Results(models.Model):
