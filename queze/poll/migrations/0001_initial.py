@@ -18,9 +18,9 @@ class Migration(migrations.Migration):
             name='Test',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('test_name', models.CharField(max_length=50)),
-                ('test_description', models.CharField(max_length=140)),
-                ('test_author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('name', models.CharField(max_length=50)),
+                ('description', models.CharField(max_length=140)),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
