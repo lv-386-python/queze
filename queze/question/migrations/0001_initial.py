@@ -10,17 +10,18 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('poll', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Test',
+            name='Question',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('test_name', models.CharField(max_length=50)),
-                ('test_description', models.CharField(max_length=140)),
-                ('test_author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('text', models.CharField(max_length=200)),
+                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to=settings.AUTH_USER_MODEL)),
+                ('test', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='poll.Test')),
             ],
         ),
     ]

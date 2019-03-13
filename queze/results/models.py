@@ -8,8 +8,8 @@ from poll.models import Test
 class Results(models.Model):
     'Class with score of the test'
     score = models.IntegerField(default=1)
-    test = models.ForeignKey(Test, on_delete=models.CASCADE, default=1)
-    passer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, related_name="results")
+    passer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="results")
     completion_date = models.DateTimeField(auto_now_add=True)
 
     @staticmethod

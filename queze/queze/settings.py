@@ -37,9 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'answer',
     'authentification',
     'poll',
-    'question'
+    'question',
+    'results',
+    'useranswer'
 ]
 
 AUTH_USER_MODEL = 'authentification.CustomUser'

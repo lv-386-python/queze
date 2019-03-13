@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from poll.models import Test, Question, Answer, Results
+from poll.models import Test
 
 
 @require_http_methods(["POST"])

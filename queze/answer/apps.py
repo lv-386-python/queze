@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class TestsConfig(AppConfig):
+class AnswerConfig(AppConfig):
     name = 'answer'

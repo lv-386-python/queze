@@ -5,16 +5,16 @@ from django.http import HttpResponse, JsonResponse
 from django.forms.models import model_to_dict
 from django.utils import timezone
 
-from authentification/models.py import CustomUser
-
+from authentification.models import CustomUser
+from question.models import Question
 
 
 class Answer(models.Model):
     'Asnwers for Questions'
 
-    question_id = models.ForeignKey(Question, on_delete=models.CASCADE, default=1)
-    answer_text = models.TextField(default=1)
-    answer_auther = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="answers")
+    text = models.TextField(default="")
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="answers")
     is_correct = models.BooleanField(default=False)
 
 
@@ -23,8 +23,8 @@ class Answer(models.Model):
         answer = Answer()
 
         answer.question_id = question
-        answer.answer_text = text
-        answer.answer_auther = user
+        answer.text = text
+        answer.author = user
         answer.is_correct = correctly
         try:
             answer.save()
@@ -42,14 +42,14 @@ class Answer(models.Model):
         return JsonResponse(model_to_dict(answer))
 
 
-    @@staticmethod
+    @staticmethod
     def update_answer(request, answer_id):
         try:
             answer = Answer.objects.get(pk=answer_id)
         except Exception:
             return HttpResponse(status=404)
         data = json.loads(request.body)
-        answer.answer_text = data['answer_text']
+        answer.text = data['text']
         try:
             answer.save()
             return JsonResponse({'message': 'Answer was successfully updated.'}, status=204)
